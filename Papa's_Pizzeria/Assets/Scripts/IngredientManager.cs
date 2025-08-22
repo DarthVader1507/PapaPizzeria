@@ -35,17 +35,14 @@ public class IngredientManager : MonoBehaviour
     void Awake()
     {
         // Initialize pool (small version)
-        allIngredients.Add(new Ingredient("Hand-tossed", "Crust", 40, 50));
+        allIngredients.Add(new Ingredient("Hand-tossed", "Crust", 60, 50));
         allIngredients.Add(new Ingredient("Thin crust", "Crust", 40, 50));
-        allIngredients.Add(new Ingredient("Cheese burst", "Crust", 20, 75));
 
-        allIngredients.Add(new Ingredient("Classic tomato", "Sauce", 50, 50));
+        allIngredients.Add(new Ingredient("Classic tomato", "Sauce", 70, 50));
         allIngredients.Add(new Ingredient("White garlic", "Sauce", 30, 75));
-        allIngredients.Add(new Ingredient("BBQ", "Sauce", 20, 100));
 
-        allIngredients.Add(new Ingredient("Mozzarella", "Cheese", 50, 50));
+        allIngredients.Add(new Ingredient("Mozzarella", "Cheese", 70, 50));
         allIngredients.Add(new Ingredient("Cheddar", "Cheese", 30, 75));
-        allIngredients.Add(new Ingredient("Feta", "Cheese", 20, 100));
 
         allIngredients.Add(new Ingredient("Onion", "Veggie", 40, 50));
         allIngredients.Add(new Ingredient("Bell pepper", "Veggie", 40, 50));
@@ -54,9 +51,6 @@ public class IngredientManager : MonoBehaviour
         allIngredients.Add(new Ingredient("Pepperoni", "Meat", 40, 50));
         allIngredients.Add(new Ingredient("Sausage", "Meat", 40, 50));
         allIngredients.Add(new Ingredient("Grilled chicken", "Meat", 20, 75));
-
-        allIngredients.Add(new Ingredient("Ramen noodles 🍜", "Fun", 10, 125));
-        allIngredients.Add(new Ingredient("French fries 🍟", "Fun", 10, 125));
     }
     private Ingredient GetRandomIngredient(params string[] categories)
     {
