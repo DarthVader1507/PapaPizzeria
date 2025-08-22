@@ -32,7 +32,7 @@ public class IngredientManager : MonoBehaviour
 {
     public List<Ingredient> allIngredients = new List<Ingredient>();
 
-    void Start()
+    void Awake()
     {
         // Initialize pool (small version)
         allIngredients.Add(new Ingredient("Hand-tossed", "Crust", 40, 50));
@@ -58,30 +58,15 @@ public class IngredientManager : MonoBehaviour
         allIngredients.Add(new Ingredient("Ramen noodles 🍜", "Fun", 10, 125));
         allIngredients.Add(new Ingredient("French fries 🍟", "Fun", 10, 125));
     }
-
-    // Generate a random pizza order
-    public PizzaOrder GenerateOrder()
-    {
-        PizzaOrder order = new PizzaOrder();
-
-        order.crust = GetRandomIngredient("Crust");
-        order.sauce = GetRandomIngredient("Sauce");
-        order.cheese = GetRandomIngredient("Cheese");
-
-        // 2 toppings per pizza (can be veggie, meat, or fun)
-        order.toppings.Add(GetRandomIngredient("Veggie", "Meat", "Fun"));
-        order.toppings.Add(GetRandomIngredient("Veggie", "Meat", "Fun"));
-
-        Debug.Log($"Order: {order.crust.name}, {order.sauce.name}, {order.cheese.name}, " +
-                  $"{order.toppings[0].name}, {order.toppings[1].name}");
-
-        return order;
-    }
-
-    // Get random ingredient from 1+ categories using weighted selection
     private Ingredient GetRandomIngredient(params string[] categories)
     {
         List<Ingredient> pool = allIngredients.FindAll(i => System.Array.Exists(categories, c => c == i.category));
+
+        if (pool.Count == 0)
+        {
+            Debug.LogError("No ingredients found for categories: " + string.Join(", ", categories));
+            return null;
+        }
 
         int totalWeight = 0;
         foreach (var ing in pool) totalWeight += ing.weight;
@@ -97,5 +82,29 @@ public class IngredientManager : MonoBehaviour
         }
 
         return pool[0]; // fallback
+    }
+
+    public PizzaOrder GenerateOrder()
+    {
+        PizzaOrder order = new PizzaOrder();
+
+        order.crust = GetRandomIngredient("Crust");
+        order.sauce = GetRandomIngredient("Sauce");
+        order.cheese = GetRandomIngredient("Cheese");
+
+        // 2 toppings per pizza (can be veggie, meat, or fun)
+        var topping1 = GetRandomIngredient("Veggie", "Meat", "Fun");
+        var topping2 = GetRandomIngredient("Veggie", "Meat", "Fun");
+
+        if (topping1 != null) order.toppings.Add(topping1);
+        if (topping2 != null) order.toppings.Add(topping2);
+
+        string toppingNames = order.toppings.Count > 0
+            ? string.Join(", ", order.toppings.ConvertAll(t => t.name))
+            : "No toppings";
+
+        Debug.Log($"Order: {order.crust?.name}, {order.sauce?.name}, {order.cheese?.name}, {toppingNames}");
+
+        return order;
     }
 }

@@ -20,8 +20,18 @@ public class OrderManager : MonoBehaviour
         while (order_count < 5)
         {
             PizzaOrder order = ingredientManager.GenerateOrder();
-            OrderText.text = order.crust.name + ", " + order.sauce.name + ", " + order.cheese.name 
-                + ", " + order.toppings[0].name + ", " + order.toppings[1].name;
+            OrderText.text = order.crust.name + "\n" + order.sauce.name + "\n " + order.cheese.name;
+            if (order.toppings.Count == 0)
+            {
+                OrderText.text += "\n No toppings";
+            }
+            else
+            {
+                foreach (var topping in order.toppings)
+                {
+                    OrderText.text += "\n " + topping.name;
+                }
+            }
             order_count++;
             yield return new WaitForSeconds(5f);
         }
