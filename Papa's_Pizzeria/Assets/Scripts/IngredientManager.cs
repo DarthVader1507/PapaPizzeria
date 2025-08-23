@@ -87,9 +87,13 @@ public class IngredientManager : MonoBehaviour
         order.cheese = GetRandomIngredient("Cheese");
 
         // 2 toppings per pizza (can be veggie, meat, or fun)
-        var topping1 = GetRandomIngredient("Veggie", "Meat", "Fun");
-        var topping2 = GetRandomIngredient("Veggie", "Meat", "Fun");
-
+        var topping1 = GetRandomIngredient("Veggie", "Meat");
+        var topping2 = null as Ingredient;
+        do
+        {
+            topping2 = GetRandomIngredient("Veggie", "Meat");
+        }
+        while (topping2 == topping1); // ensure different toppings
         if (topping1 != null) order.toppings.Add(topping1);
         if (topping2 != null) order.toppings.Add(topping2);
 
