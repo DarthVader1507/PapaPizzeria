@@ -36,21 +36,21 @@ public class IngredientManager : MonoBehaviour
     {
         // Initialize pool (small version)
         allIngredients.Add(new Ingredient("Hand-tossed", "Crust", 60, 50));
-        allIngredients.Add(new Ingredient("Thin crust", "Crust", 40, 50));
+        allIngredients.Add(new Ingredient("Thin-crust", "Crust", 40, 50));
 
-        allIngredients.Add(new Ingredient("Classic tomato", "Sauce", 70, 50));
-        allIngredients.Add(new Ingredient("White garlic", "Sauce", 30, 75));
+        allIngredients.Add(new Ingredient("Classic-tomato", "Sauce", 70, 50));
+        allIngredients.Add(new Ingredient("White-garlic", "Sauce", 30, 75));
 
         allIngredients.Add(new Ingredient("Mozzarella", "Cheese", 70, 50));
         allIngredients.Add(new Ingredient("Cheddar", "Cheese", 30, 75));
 
         allIngredients.Add(new Ingredient("Onion", "Veggie", 40, 50));
-        allIngredients.Add(new Ingredient("Bell pepper", "Veggie", 40, 50));
+        allIngredients.Add(new Ingredient("Bell-pepper", "Veggie", 40, 50));
         allIngredients.Add(new Ingredient("Mushrooms", "Veggie", 20, 75));
 
         allIngredients.Add(new Ingredient("Pepperoni", "Meat", 40, 50));
         allIngredients.Add(new Ingredient("Sausage", "Meat", 40, 50));
-        allIngredients.Add(new Ingredient("Grilled chicken", "Meat", 20, 75));
+        allIngredients.Add(new Ingredient("Grilled-chicken", "Meat", 20, 75));
     }
     private Ingredient GetRandomIngredient(params string[] categories)
     {

@@ -3,6 +3,7 @@ using UnityEngine;
 public class ToppingSpawner : MonoBehaviour
 {
     private GameObject currentTopping;
+    private ToppingButton currentButton; // Track which button started the drag
 
     void Update()
     {
@@ -33,10 +34,18 @@ public class ToppingSpawner : MonoBehaviour
 
                     currentTopping.transform.position = pizzaCenter + offset;
                     currentTopping.transform.SetParent(hit.transform);
+
+                    // Call scoring logic only after drop
+                    if (currentButton != null)
+                    {
+                        currentButton.OnToppingAdded();
+                        currentButton = null;
+                    }
                 }
                 else
                 {
                     Destroy(currentTopping);
+                    currentButton = null;
                 }
 
                 currentTopping = null;
@@ -44,16 +53,19 @@ public class ToppingSpawner : MonoBehaviour
         }
     }
 
-    public void StartDragTopping(GameObject prefab)
+    // Accept ToppingButton reference
+    public void StartDragTopping(GameObject prefab, ToppingButton button)
     {
         if (currentTopping == null)
         {
             currentTopping = Instantiate(prefab);
+            currentButton = button;
         }
     }
-    public bool IsCorrectTopping(GameObject toppingPrefab,  Ingredient requiredToppingName)
+
+    public bool IsCorrectTopping(GameObject toppingPrefab, Ingredient requiredToppingName)
     {
-        // Compare the prefab's name to the required topping name
-        return toppingPrefab.name == requiredToppingName.ToString();
+        Debug.Log("Checking topping: " + toppingPrefab + " against required: " + requiredToppingName.name);
+        return toppingPrefab.name == requiredToppingName.name;
     }
 }
