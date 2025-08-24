@@ -59,30 +59,32 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.sauce))
             {
-                scoreManager.AddPoints(pointsForCorrectTopping);
+                scoreManager.AddPoints(CurrentOrder.sauce.score);
             }
         }
         else if (ingredient.category == "Cheese")
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.cheese))
             {
-                scoreManager.AddPoints(pointsForCorrectTopping);
+                scoreManager.AddPoints(CurrentOrder.cheese.score);
             }
         }
         else
         {
             bool isCorrect = false;
-            foreach (var topping in CurrentOrder.toppings)
+            var topping = ingredient;
+            foreach (var toppings in CurrentOrder.toppings)
             {
-                if (spawner.IsCorrectTopping(toppingPrefab, topping))
+                if (spawner.IsCorrectTopping(toppingPrefab, toppings))
                 {
                     isCorrect = true;
+                    topping = toppings;
                     break;
                 }
             }
             if (isCorrect)
             {
-                scoreManager.AddPoints(pointsForCorrectTopping);
+                scoreManager.AddPoints(topping.score);
             }
         }
     }
