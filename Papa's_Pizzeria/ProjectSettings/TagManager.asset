@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PizzaBase
   - Hand-tossed
+  - ThinCrust
   layers:
   - Default
   - TransparentFX
@@ -40,11 +41,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2031339981
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Button
     uniqueID: 1451883449
+    locked: 0
+  - name: Sauce
+    uniqueID: 2238766861
+    locked: 0
+  - name: Cheese
+    uniqueID: 1937580103
+    locked: 0
+  - name: Toppings
+    uniqueID: 1865074725
     locked: 0
   m_RenderingLayers:
   - Default

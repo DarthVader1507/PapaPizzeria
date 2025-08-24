@@ -3,8 +3,11 @@ using UnityEngine.UI;
 public class ScoringControls : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public int score = 0;
+    public static int score = 0;
     public Text scoreText;
+    void Start(){
+        scoreText.text = score.ToString();
+    }
     public void AddPoints(int points)
     {
         score += points;

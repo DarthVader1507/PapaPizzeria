@@ -65,6 +65,11 @@ public class ToppingSpawner : MonoBehaviour
 
     public bool IsCorrectTopping(GameObject toppingPrefab, Ingredient requiredToppingName)
     {
+        if (toppingPrefab == null || requiredToppingName == null)
+        {
+            Debug.LogError("Topping prefab or required topping name is null.");
+            return false;
+        }
         Debug.Log("Checking topping: " + toppingPrefab + " against required: " + requiredToppingName.name);
         return toppingPrefab.name == requiredToppingName.name;
     }

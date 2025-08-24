@@ -10,7 +10,6 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     private Ingredient ingredient; // Use Ingredient instead of string category
     private OrderManager orderManager;
     public PizzaOrder CurrentOrder;
-    public int pointsForCorrectTopping = 10; // fallback value
 
     void Start()
     {
@@ -45,8 +44,22 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     }
     public void OnToppingAdded()
     {
-        if (ingredient == null) return;
-
+        CurrentOrder = orderManager.order; // Update to the latest order
+        if (ingredient == null)
+        {
+            Debug.LogError("Ingredient is not assigned for this topping button.");
+            return;
+        }
+        if (spawner == null)
+        {
+            Debug.LogError("ToppingSpawner is not assigned.");
+            return;
+        }
+        if (toppingPrefab == null)
+        {
+            Debug.LogError("ToppingPrefab is not assigned.");
+            return;
+        }
         if (ingredient.category == "Crust")
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.crust))
