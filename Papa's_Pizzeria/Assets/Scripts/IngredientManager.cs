@@ -36,10 +36,10 @@ public class IngredientManager : MonoBehaviour
     {
         // Initialize pool (small version)
         allIngredients.Add(new Ingredient("Hand-tossed", "Crust", 60, 50));
-        allIngredients.Add(new Ingredient("Thin-crust", "Crust", 40, 50));
+        allIngredients.Add(new Ingredient("Thin-crust", "Crust", 40, 75));
 
         allIngredients.Add(new Ingredient("Classic-tomato", "Sauce", 70, 50));
-        allIngredients.Add(new Ingredient("White-garlic", "Sauce", 30, 75));
+        allIngredients.Add(new Ingredient("White-garlic", "Sauce", 30, 74));
 
         allIngredients.Add(new Ingredient("Mozzarella", "Cheese", 70, 50));
         allIngredients.Add(new Ingredient("Cheddar", "Cheese", 30, 75));

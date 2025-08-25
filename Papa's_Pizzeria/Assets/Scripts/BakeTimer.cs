@@ -9,7 +9,7 @@ public class BakeTimer : MonoBehaviour
     [SerializeField] private Text TitleText;
     [SerializeField] private Text ErrorText;
     private GeneralControls generalControls;
-    private bool isBaking;
+    public bool isBaking;
     void Start()
     {
         generalControls = FindObjectOfType<GeneralControls>();
@@ -19,7 +19,7 @@ public class BakeTimer : MonoBehaviour
     {
         if (!generalControls.StopScene())
         {
-            ErrorText.text = "Please complete your pizza before proceeding to bake.";
+            StartCoroutine(ErrorMessageCoroutine("Finish your pizza to proceed to baking", 2.0f));
             return;
         }
         if (!isBaking)
@@ -34,7 +34,7 @@ public class BakeTimer : MonoBehaviour
         }
         else
         {
-            ErrorText.text = "Your pizza is already baking!";
+            StartCoroutine(ErrorMessageCoroutine("Your pizza is already baking!" ,2.0f));
         }
     }
     private IEnumerator Countdown()
@@ -65,6 +65,12 @@ public class BakeTimer : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+    }
+    private IEnumerator ErrorMessageCoroutine(string message, float delay)
+    {
+        ErrorText.text = message;
+        yield return new WaitForSeconds(delay);
+        ErrorText.text = "";
     }
     // ...existing code...
 }

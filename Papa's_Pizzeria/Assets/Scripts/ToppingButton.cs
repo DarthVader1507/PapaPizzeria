@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections;
 public class ToppingButton : MonoBehaviour, IPointerDownHandler
 {
     public GameObject toppingPrefab;   // assign in Inspector
@@ -45,22 +46,22 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     {
         if (ingredient != null && ingredient.category == "Crust" && generalControls.isCrustAdded)
         {
-            errorMessage.text = "Crust already added. Dragging disabled.";
+            StartCoroutine(ErrorMessageCoroutine("Crust already added. Dragging disabled.", 2f));
             return;
         }
         else if (ingredient != null && ingredient.category == "Sauce" && (!generalControls.isCrustAdded || generalControls.isSauceAdded))
         {
-            errorMessage.text = "Add crust first or sauce already added.\n Dragging disabled.";
+            StartCoroutine(ErrorMessageCoroutine("Add crust first or sauce already added. Dragging disabled.", 2f));
             return;
         }
         else if (ingredient != null && ingredient.category == "Cheese" && (!generalControls.isSauceAdded || generalControls.isCheeseAdded))
         {
-            errorMessage.text = "Add sauce first or cheese already added.\n Dragging disabled.";
+            StartCoroutine(ErrorMessageCoroutine("Add sauce first or cheese already added. Dragging disabled.", 2f));
             return;
         }
         else if (ingredient != null && ((ingredient.category == "Veggie" || ingredient.category == "Meat") && !generalControls.isCheeseAdded))
         {
-            errorMessage.text = "Add previous layers first. Dragging disabled.";
+            StartCoroutine(ErrorMessageCoroutine("Add cheese first. Dragging disabled.", 2f));
             return;
         }
         spawner.StartDragTopping(toppingPrefab, this);
@@ -92,7 +93,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                errorMessage.text = "Wrong Crust Added";
+                StartCoroutine(ErrorMessageCoroutine("Wrong Crust Added", 2f));
             }
             generalControls.isCrustAdded = true;
         }
@@ -104,7 +105,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                errorMessage.text = "Wrong Sauce Added";
+                StartCoroutine(ErrorMessageCoroutine("Wrong Sauce Added", 2f));
             }
             generalControls.isSauceAdded = true;
         }
@@ -116,7 +117,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             }
             else
             {
-                errorMessage.text = "Wrong Cheese Added";
+                StartCoroutine(ErrorMessageCoroutine("Wrong Cheese Added", 2f));
             }
             generalControls.isCheeseAdded = true;
         }
@@ -138,5 +139,11 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
                 scoreManager.AddPoints(topping.score);
             }
         }
+    }
+    private IEnumerator ErrorMessageCoroutine(string message, float delay)
+    {
+        errorMessage.text = message;
+        yield return new WaitForSeconds(delay);
+        errorMessage.text = "";
     }
 }
