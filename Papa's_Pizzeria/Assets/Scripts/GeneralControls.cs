@@ -18,24 +18,13 @@ public class GeneralControls : MonoBehaviour
     public bool StopScene(){
         if ((!isCrustAdded || !isSauceAdded || !isCheeseAdded))
         {
-            Debug.Log("Please complete your pizza before proceeding to bake.");
             return false;
         }
         return true;
     }
     public void ChangeScene(string sceneName)
     {
-        /*if ((!isCrustAdded || !isSauceAdded || !isCheeseAdded) && sceneName == "BakeScene")
-        {
-            Debug.Log("Please complete your pizza before proceeding to bake.");
-            return;
-        }*/
-        if (sceneName == "SampleScene"){
-            SceneManager.LoadScene(sceneName);
-            return;
-        }
         SceneManager.LoadScene(sceneName);
         return;
-
     }
 }
