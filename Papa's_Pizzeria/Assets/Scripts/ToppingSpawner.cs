@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ToppingSpawner : MonoBehaviour
 {
     private GameObject currentTopping;
     private ToppingButton currentButton; // Track which button started the drag
+    public Text errorText;
 
     void Update()
     {

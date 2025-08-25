@@ -11,6 +11,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     private OrderManager orderManager;
     public PizzaOrder CurrentOrder;
     private GeneralControls generalControls;
+    private Text errorMessage;
     void Start()
     {
         spawner = FindObjectOfType<ToppingSpawner>();
@@ -19,6 +20,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
         ingredientManager = FindObjectOfType<IngredientManager>();
         generalControls = FindObjectOfType<GeneralControls>();
         CurrentOrder = orderManager.order;
+        errorMessage = spawner.errorText;
         if (scoreManager == null)
         {
             Debug.LogError("ScoringControls not found in the scene.");
@@ -43,22 +45,22 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     {
         if (ingredient != null && ingredient.category == "Crust" && generalControls.isCrustAdded)
         {
-            Debug.Log("Crust already added. Dragging disabled.");
+            errorMessage.text = "Crust already added. Dragging disabled.";
             return;
         }
         else if (ingredient != null && ingredient.category == "Sauce" && (!generalControls.isCrustAdded || generalControls.isSauceAdded))
         {
-            Debug.Log("Add crust first or sauce already added. Dragging disabled.");
+            errorMessage.text = "Add crust first or sauce already added.\n Dragging disabled.";
             return;
         }
         else if (ingredient != null && ingredient.category == "Cheese" && (!generalControls.isSauceAdded || generalControls.isCheeseAdded))
         {
-            Debug.Log("Add sauce first or cheese already added. Dragging disabled.");
+            errorMessage.text = "Add sauce first or cheese already added.\n Dragging disabled.";
             return;
         }
         else if (ingredient != null && ((ingredient.category == "Veggie" || ingredient.category == "Meat") && !generalControls.isCheeseAdded))
         {
-            Debug.Log("Add previous layers first. Dragging disabled.");
+            errorMessage.text = "Add previous layers first. Dragging disabled.";
             return;
         }
         spawner.StartDragTopping(toppingPrefab, this);
@@ -88,6 +90,10 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
                 Debug.Log("Correct Crust Added");
                 scoreManager.AddPoints(CurrentOrder.crust.score);
             }
+            else
+            {
+                errorMessage.text = "Wrong Crust Added";
+            }
             generalControls.isCrustAdded = true;
         }
         else if (ingredient.category == "Sauce" && !(generalControls.isSauceAdded) && generalControls.isCrustAdded)
@@ -96,6 +102,10 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             {
                 scoreManager.AddPoints(CurrentOrder.sauce.score);
             }
+            else
+            {
+                errorMessage.text = "Wrong Sauce Added";
+            }
             generalControls.isSauceAdded = true;
         }
         else if (ingredient.category == "Cheese" && !(generalControls.isCheeseAdded) && generalControls.isSauceAdded)
@@ -103,6 +113,10 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.cheese))
             {
                 scoreManager.AddPoints(CurrentOrder.cheese.score);
+            }
+            else
+            {
+                errorMessage.text = "Wrong Cheese Added";
             }
             generalControls.isCheeseAdded = true;
         }
