@@ -10,7 +10,8 @@ public class BakeTimer : MonoBehaviour
     [SerializeField] private Text ErrorText;
     private GeneralControls generalControls;
     private bool isBaking;
-    void Start() {
+    void Start()
+    {
         generalControls = FindObjectOfType<GeneralControls>();
         isBaking = false;
     }
@@ -21,13 +22,19 @@ public class BakeTimer : MonoBehaviour
             ErrorText.text = "Please complete your pizza before proceeding to bake.";
             return;
         }
-        if (!isBaking){
+        if (!isBaking)
+        {
+            isBaking = true;
+            RemovePizzaToppings();
             ErrorText.text = "";
             TitleText.text = "Baking Time";
             timeLeft = 10;
             BakeTimerText.text = timeLeft.ToString();
-            isBaking = true;
             StartCoroutine(Countdown());
+        }
+        else
+        {
+            ErrorText.text = "Your pizza is already baking!";
         }
     }
     private IEnumerator Countdown()
@@ -44,4 +51,20 @@ public class BakeTimer : MonoBehaviour
         TitleText.text = "";
         isBaking = false;
     }
+    // ...existing code...
+
+    private void RemovePizzaToppings()
+    {
+        GameObject pizzaParent = GameObject.Find("PizzaBase"); // Replace with your pizza parent name
+        if (pizzaParent == null) return;
+
+        foreach (Transform child in pizzaParent.transform)
+        {
+            if (child.name != "PizzaBase") // Replace with your PizzaBase object's name
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+    // ...existing code...
 }

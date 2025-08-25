@@ -30,6 +30,7 @@ public class TimerScript : MonoBehaviour
         {
             timeLeft = 0;
             timerText.text = "Time's up!";
+            Time.timeScale = 0; // Pause the game
         }
     }
 }
