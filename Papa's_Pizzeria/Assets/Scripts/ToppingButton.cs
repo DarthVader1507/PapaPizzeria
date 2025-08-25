@@ -41,6 +41,26 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (ingredient != null && ingredient.category == "Crust" && generalControls.isCrustAdded)
+        {
+            Debug.Log("Crust already added. Dragging disabled.");
+            return;
+        }
+        else if (ingredient != null && ingredient.category == "Sauce" && (!generalControls.isCrustAdded || generalControls.isSauceAdded))
+        {
+            Debug.Log("Add crust first or sauce already added. Dragging disabled.");
+            return;
+        }
+        else if (ingredient != null && ingredient.category == "Cheese" && (!generalControls.isSauceAdded || generalControls.isCheeseAdded))
+        {
+            Debug.Log("Add sauce first or cheese already added. Dragging disabled.");
+            return;
+        }
+        else if (ingredient != null && ((ingredient.category == "Veggie" || ingredient.category == "Meat") && !generalControls.isCheeseAdded))
+        {
+            Debug.Log("Add previous layers first. Dragging disabled.");
+            return;
+        }
         spawner.StartDragTopping(toppingPrefab, this);
     }
     public void OnToppingAdded()
@@ -86,7 +106,7 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             }
             generalControls.isCheeseAdded = true;
         }
-        else
+        else if ((ingredient.category == "Veggie" || ingredient.category == "Meat") && generalControls.isCheeseAdded)
         {
             bool isCorrect = false;
             var topping = ingredient;
