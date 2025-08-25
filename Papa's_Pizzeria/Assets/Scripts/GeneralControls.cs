@@ -15,14 +15,22 @@ public class GeneralControls : MonoBehaviour
         isTopping1Added = false;
         isTopping2Added = false;
     }
+    public bool StopScene(){
+        if ((!isCrustAdded || !isSauceAdded || !isCheeseAdded))
+        {
+            Debug.Log("Please complete your pizza before proceeding to bake.");
+            return false;
+        }
+        return true;
+    }
     public void ChangeScene(string sceneName)
     {
-        if ((!isCrustAdded || !isSauceAdded || !isCheeseAdded) && sceneName == "BakeScene")
+        /*if ((!isCrustAdded || !isSauceAdded || !isCheeseAdded) && sceneName == "BakeScene")
         {
             Debug.Log("Please complete your pizza before proceeding to bake.");
             return;
-        }
-        else if (sceneName == "SampleScene"){
+        }*/
+        if (sceneName == "SampleScene"){
             SceneManager.LoadScene(sceneName);
             return;
         }
