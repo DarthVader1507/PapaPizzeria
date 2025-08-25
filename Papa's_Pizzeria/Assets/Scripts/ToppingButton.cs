@@ -10,13 +10,14 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
     private Ingredient ingredient; // Use Ingredient instead of string category
     private OrderManager orderManager;
     public PizzaOrder CurrentOrder;
-
+    private GeneralControls generalControls;
     void Start()
     {
         spawner = FindObjectOfType<ToppingSpawner>();
         scoreManager = FindObjectOfType<ScoringControls>();
         orderManager = FindObjectOfType<OrderManager>();
         ingredientManager = FindObjectOfType<IngredientManager>();
+        generalControls = FindObjectOfType<GeneralControls>();
         CurrentOrder = orderManager.order;
         if (scoreManager == null)
         {
@@ -60,27 +61,30 @@ public class ToppingButton : MonoBehaviour, IPointerDownHandler
             Debug.LogError("ToppingPrefab is not assigned.");
             return;
         }
-        if (ingredient.category == "Crust")
+        if (ingredient.category == "Crust" && !(generalControls.isCrustAdded))
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.crust))
             {
                 Debug.Log("Correct Crust Added");
                 scoreManager.AddPoints(CurrentOrder.crust.score);
             }
+            generalControls.isCrustAdded = true;
         }
-        else if (ingredient.category == "Sauce")
+        else if (ingredient.category == "Sauce" && !(generalControls.isSauceAdded) && generalControls.isCrustAdded)
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.sauce))
             {
                 scoreManager.AddPoints(CurrentOrder.sauce.score);
             }
+            generalControls.isSauceAdded = true;
         }
-        else if (ingredient.category == "Cheese")
+        else if (ingredient.category == "Cheese" && !(generalControls.isCheeseAdded) && generalControls.isSauceAdded)
         {
             if (spawner.IsCorrectTopping(toppingPrefab, CurrentOrder.cheese))
             {
                 scoreManager.AddPoints(CurrentOrder.cheese.score);
             }
+            generalControls.isCheeseAdded = true;
         }
         else
         {
