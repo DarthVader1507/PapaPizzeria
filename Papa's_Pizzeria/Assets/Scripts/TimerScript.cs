@@ -4,7 +4,7 @@ public class TimerScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private Text timerText;
-    public static float timeLeft = 180.0f;//In seconds
+    public static float timeLeft = 180.0f; // 3 minutes in seconds
     void Start()
     {
         timerText.text = timeLeft.ToString("F2");
